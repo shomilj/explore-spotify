@@ -1,4 +1,10 @@
 import json
+from xml.etree.ElementTree import iterparse
+import pandas as pd
+from tqdm import tqdm_notebook as tqdm
+from dateutil.parser import parse
+import pytz
+from pytz import timezone
 
 class SpotifyAPI():
     
@@ -29,9 +35,29 @@ class SpotifyAPI():
         """)
         
         
-class HealthLoader():
+class HealthAPI():
     
-    def __init__(self, root='/data'):
+    def __init__(self, root='data'):
         self.root = root + '/apple_health_export/'
-    
+
+    def help(self):
+        print(f"""
+Available Features:
+• load_heartbeats()
+        """)
+
+    def load_heartbeats(self):
+        dataset = []
+        for _ , elem in tqdm(iterparse(self.root + 'export.xml')):
+            if elem.tag == "Record":
+                record = elem.attrib
+                if record.get('type') == 'HKQuantityTypeIdentifierHeartRate':
+                    c = parse(record.get('creationDate')).astimezone(pytz.utc)
+                    s = parse(record.get('startDate')).astimezone(pytz.utc)
+                    e = parse(record.get('endDate')).astimezone(pytz.utc)
+                    v = record.get('value')
+                    dataset.append([c, s, e, v])
+                    
+        dataset = pd.DataFrame(dataset, columns=['creationDate', 'startDate', 'endDate', 'value'])
+        return dataset
     
