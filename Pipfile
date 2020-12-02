@@ -1,0 +1,19 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+scikit-learn = "*"
+pandas = "*"
+numpy = "*"
+plotly = "*"
+tqdm = "*"
+jupyter = "*"
+requests = "*"
+neo4j-driver = "*"
+
+[requires]
+python_version = "3.7"
