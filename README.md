@@ -1,3 +1,5 @@
+# Explore Spotify
+
 > This project is part of the Explore series: a mega-project that I've been working on for several months in which I analyze my day-to-day habits through data.
 
 **Updated on 8/3/2020 with new data!**
