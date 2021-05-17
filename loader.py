@@ -12,15 +12,21 @@ class SpotifyAPI():
         self.root = root + '/spotify/'
         
     def load_searches(self):
-        with open(self.root + 'SearchQueries.json', 'r') as file:
+        with open(self.root + 'SearchQueries1.json', 'r') as file:
             data = json.load(file)
             return data
     
     def load_streaming(self):
-        data0 = json.load(open(self.root + 'StreamingHistory0.json', 'r'))
-        data1 = json.load(open(self.root + 'StreamingHistory1.json', 'r'))
-        data2 = json.load(open(self.root + 'StreamingHistory2.json', 'r'))
-        return data0 + data1 + data2
+        data = []
+        included = set()
+        for i in range(0, 10):
+            for row in json.load(open(self.root + f'StreamingHistory{i}.json', 'r')):
+                if row.get('endTime') not in included:
+                    included.add(row.get('endTime'))
+                    data.append(row)
+                
+        data = list(sorted(data, key=lambda row : row.get('endTime')))
+        return data
     
     def load_tracks(self):
         with open(self.root + 'YourLibrary.json', 'r') as file:

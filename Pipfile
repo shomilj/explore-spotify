@@ -14,6 +14,8 @@ tqdm = "*"
 jupyter = "*"
 requests = "*"
 neo4j-driver = "*"
+ipykernel = "*"
+sklearn = "*"
 
 [requires]
 python_version = "3.7"
