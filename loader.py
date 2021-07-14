@@ -19,7 +19,7 @@ class SpotifyAPI():
     def load_streaming(self):
         data = []
         included = set()
-        for i in range(0, 10):
+        for i in range(0, 15):
             for row in json.load(open(self.root + f'StreamingHistory{i}.json', 'r')):
                 if row.get('endTime') not in included:
                     included.add(row.get('endTime'))
